@@ -3,6 +3,7 @@ package com.musemaker.muse_backend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,12 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.musemaker.muse_backend.model.User;
 import com.musemaker.muse_backend.repository.UserRepository;
 
+@CrossOrigin
 @RestController
 public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/users")
+    @GetMapping(value = { "/users", "/users/" })
     public ResponseEntity<Object> getUsers() {
         return ResponseEntity.ok(userRepository.findAll());
     }
@@ -36,7 +38,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/users")
+    @PostMapping(value = { "/users", "/users/" })
     public ResponseEntity<Object> saveUser(@RequestBody User user) {
         return ResponseEntity.ok(userRepository.save(user));
     }
