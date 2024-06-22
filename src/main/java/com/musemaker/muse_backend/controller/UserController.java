@@ -1,27 +1,19 @@
 package com.musemaker.muse_backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.musemaker.muse_backend.model.User;
-import com.musemaker.muse_backend.service.UserService;
-
-import java.util.List;
+import com.musemaker.muse_backend.repository.UserRepository;
 
 @RestController
-@RequestMapping("/users")
 public class UserController {
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
-    @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
-    }
-
-    @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.saveUser(user);
+    @GetMapping("/users")
+    public ResponseEntity<Object> getUsers() {
+        return ResponseEntity.ok(userRepository.findAll());
     }
 }
-
