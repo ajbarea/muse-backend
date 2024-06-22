@@ -1,6 +1,7 @@
 package com.musemaker.muse_backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,9 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public ResponseEntity<Object> getUserById(@PathVariable Long id) {
-        return ResponseEntity.ok(userRepository.findById(id).orElse(null));
+        return userRepository.findById(id)
+                .map(user -> ResponseEntity.ok().body((Object) user))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id: " + id));
     }
 
     @DeleteMapping("/users/{id}")
