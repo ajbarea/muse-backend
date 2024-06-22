@@ -17,10 +17,11 @@ public class TestController {
         return ResponseEntity.ok("Welcome! This is a test HomePage");
     }
 
-    @GetMapping("/test")
+    @GetMapping("/userbase")
     public ResponseEntity<String> testDatabaseConnection() {
         long count = userRepository.count();
-        return ResponseEntity.ok("Number of records: " + count);
+        return ResponseEntity.ok("Welcome! Thank you for being a member of our growing society of " + count
+                + " artists and art lovers!");
     }
 
 }

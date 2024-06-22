@@ -2,7 +2,11 @@ package com.musemaker.muse_backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.musemaker.muse_backend.model.User;
@@ -19,18 +23,18 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<Object> getUserById(Long id) {
+    public ResponseEntity<Object> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userRepository.findById(id).orElse(null));
     }
 
-    @GetMapping("/users/{id}")
-    public ResponseEntity<Object> deleteUser(Long id) {
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
         userRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/users")
-    public ResponseEntity<Object> saveUser(User user) {
+    @PostMapping("/users")
+    public ResponseEntity<Object> saveUser(@RequestBody User user) {
         return ResponseEntity.ok(userRepository.save(user));
     }
 
